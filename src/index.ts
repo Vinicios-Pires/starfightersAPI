@@ -1,9 +1,11 @@
 import express, { Request, Response, json } from "express";
 import axios from "axios";
 import db from "./config/db.js";
+import router from "./routes/index.js";
 
 const app = express();
 app.use(json());
+app.use(router);
 
 app.get("/", async (req: Request, res: Response) => {
 	res.send("OK!");
@@ -133,20 +135,6 @@ app.post("/battle", async (req: Request, res: Response) => {
 	} catch (err) {
 		console.log(err);
 		res.sendStatus(err.code);
-	}
-});
-
-app.get("/ranking", async (req: Request, res: Response) => {
-	try {
-		const result = await db.query(
-			`SELECT username, wins, losses, draws
-      FROM fighters
-      ORDER BY wins DESC, draws DESC`
-		);
-		res.send(result.rows);
-	} catch (err) {
-		console.error(err);
-		res.sendStatus(500);
 	}
 });
 
