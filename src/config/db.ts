@@ -1,18 +1,12 @@
 import pg from "pg";
+import "./setup.js";
 
 const { Pool } = pg;
 
-const databaseConfig = {
+const db = new Pool({
 	connectionString: process.env.DATABASE_URL,
-	ssl: {
-		rejectUnauthorized: false,
-	},
-};
-
-if (process.env.NODE_ENV === "dev") {
-	delete databaseConfig.ssl;
-}
-
-const db = new Pool(databaseConfig);
+});
 
 export default db;
+
+

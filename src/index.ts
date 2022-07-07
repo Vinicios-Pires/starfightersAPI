@@ -46,7 +46,7 @@ app.post("/battle", async (req: Request, res: Response) => {
 		if (firstUserExists.rowCount === 0) {
 			await db.query(
 				`INSERT INTO fighters (username, wins, losses, draws)
-         VALUES ($1,$2,$3,$5)`,
+        VALUES ($1, $2, $3, $4)`,
 				[firstUser, 0, 0, 0]
 			);
 		}
@@ -58,7 +58,7 @@ app.post("/battle", async (req: Request, res: Response) => {
 		if (secondUserExists.rowCount === 0) {
 			await db.query(
 				`INSERT INTO fighters (username, wins, losses, draws)
-         VALUES ($1,$2,$3,$5)`,
+        VALUES ($1, $2, $3, $4)`,
 				[secondUser, 0, 0, 0]
 			);
 		}
@@ -67,14 +67,14 @@ app.post("/battle", async (req: Request, res: Response) => {
 		if (countStarsFirstUser > countStarsSecondUser) {
 			await db.query(
 				`UPDATE fighters
-         SET wins=wins+1 losses=losses draws=draws
+         SET wins=wins+1
          WHERE username=$1`,
 				[firstUser]
 			);
 
 			await db.query(
 				`UPDATE fighters
-         SET wins=wins losses=losses+1 draws=draws
+         SET losses=losses+1
          WHERE username=$1`,
 				[secondUser]
 			);
@@ -89,14 +89,14 @@ app.post("/battle", async (req: Request, res: Response) => {
 		if (countStarsSecondUser > countStarsFirstUser) {
 			await db.query(
 				`UPDATE fighters
-         SET wins=wins+1 losses=losses draws=draws
+         SET wins=wins+1 
          WHERE username=$1`,
 				[secondUser]
 			);
 
 			await db.query(
 				`UPDATE fighters
-         SET wins=wins losses=losses+1 draws=draws
+         SET losses=losses+1 
          WHERE username=$1`,
 				[firstUser]
 			);
@@ -111,13 +111,13 @@ app.post("/battle", async (req: Request, res: Response) => {
 		if (countStarsSecondUser === countStarsFirstUser) {
 			await db.query(
 				`UPDATE fighters
-         SET wins=wins losses=losses draws=draws+1
+         SET draws=draws+1
          WHERE username=$1`,
 				[firstUser]
 			);
 			await db.query(
 				`UPDATE fighters
-         SET wins=wins losses=losses draws=draws+1
+         SET draws=draws+1
          WHERE username=$1`,
 				[secondUser]
 			);
