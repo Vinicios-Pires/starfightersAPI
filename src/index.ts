@@ -1,6 +1,4 @@
 import express, { Request, Response, json } from "express";
-import axios from "axios";
-import db from "./config/db.js";
 import router from "./routes/index.js";
 
 const app = express();

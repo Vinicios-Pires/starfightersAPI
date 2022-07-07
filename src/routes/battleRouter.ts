@@ -45,6 +45,7 @@ battleRouter.post("/battle", async (req: Request, res: Response) => {
         VALUES ($1, $2, $3, $4)`,
 				[firstUser, 0, 0, 0]
 			);
+			return res.status(201).send("New fighter created!");
 		}
 
 		const secondUserExists = await db.query(
@@ -57,6 +58,7 @@ battleRouter.post("/battle", async (req: Request, res: Response) => {
         VALUES ($1, $2, $3, $4)`,
 				[secondUser, 0, 0, 0]
 			);
+			return res.status(201).send("New fighter created!");
 		}
 
 		// batalha
